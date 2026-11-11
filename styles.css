@@ -10,3 +10,9 @@ body, button, input{font-family:'Noto Sans SC','DM Sans',Arial,sans-serif}
 .headline-row h1,.hero-main h2,.story-cover h2,.section-title,.article-top h1,.article-body h2,.discover-copy h2{letter-spacing:.01em}
 .nav-link,.eyebrow,.cover-label,.cover-meta,.section-more,.card-category,.card-read,.site-footer,.editorial-note{letter-spacing:.025em}
 @media(max-width:600px){.hero-main h2{font-size:31px}.brand-title{letter-spacing:0}}
+/* Preserve the complete social-media screenshot in the article, rather than cropping it. */
+.article-hero-screenshot{height:auto;max-width:690px;overflow:visible;background:#fff}
+.article-hero-screenshot img{width:100%;height:auto;display:block;object-fit:contain}
+.article-hero-screenshot figcaption{font-size:13px;color:#777;line-height:1.65;padding:12px 0 0;text-align:center}
+.article-body ul{padding-left:1.5em;margin:1.1em 0 1.7em}
+.article-body li{margin:.55em 0;line-height:1.85}
