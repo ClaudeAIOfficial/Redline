@@ -1,50 +1,23 @@
-# Redline China | 红线新闻
+# 红线新闻（Redline China）
 
-A responsive, static news website inspired by the editorial structure of CGTN.com, with Redline China branding and the supplied logo.
+全站简体中文版新闻网站，提供首页、分类页面、文章页面、站内搜索、移动端导航和分享功能。
 
-## What works
-
-- Responsive homepage with lead stories, editors' picks, latest stories, topic sections, and video previews.
-- Working category navigation for China, World, Politics, Business, Sci-Tech, Culture, Travel, Nature, Video, and Opinion.
-- Search overlay (also open with Ctrl/Cmd + K) and keyword results.
-- Individual article routes (`?article=...`), related articles, share-on-X, and copy-link controls.
-- Mobile menu, accessible semantic layout, original logo, favicon, social and SEO metadata.
-- No build process, Node packages, database, or API keys are required.
-
-## Run locally
-
-Extract the ZIP, then open `index.html` in your browser. For the most reliable experience, serve the folder locally:
+## 本地运行
 
 ```bash
-cd redline-china
 python -m http.server 3000
 ```
 
-Visit http://localhost:3000.
+访问 http://localhost:3000 。
 
-## Deploy to Vercel
+## 部署到 Vercel
 
-Import the unzipped folder into a Git repository and select it as a Vercel project. Use **Other** as the framework preset, leave the build command empty, and deploy. Alternatively, use the Vercel CLI from this directory: `vercel`.
+使用 GitHub 仓库导入项目，框架选择 Other，无须填写构建命令，直接部署。全部页面通过 `?article=...` 和 `?section=...` 参数跳转。
 
-The home page is `index.html`, and all pages use query-string routes, so no application server or rewrites are required.
+## 内容管理
 
-## Replace the sample content
+文章标题、导语、分类、图片等配置位于 `app.js` 的 `ARTICLES` 数组内，文章正文由 `bodyFor()` 生成。更新真实报道时，请使用经过核实的事实和具有适当授权的图片。页面保留原有红线新闻视觉体系，且不与 CGTN 关联。
 
-`app.js` contains an `ARTICLES` array. Each item supports the following fields:
+## 素材
 
-- `id`: unique URL slug
-- `category`: one of the navbar categories
-- `type`: label such as Feature or Explainer
-- `title`: article title
-- `excerpt`: short introduction
-- `image`: the filename stem of a fallback image in `assets/`
-- `photo`: optional Unsplash image ID, rendered via `images.unsplash.com`
-- `read`: reading time in minutes
-
-To add verified reporting, update the `ARTICLES` data and the `bodyFor()` function, which currently inserts generic preview copy into article pages. To use your own photographs, replace the photo logic in `image()` or swap in licensed image files from `assets/`.
-
-**Important:** The included articles and video cards are editorial layout examples, not actual news reporting or playable broadcasts. Replace them with sourced, fact-checked news and properly licensed media before public launch. Images use Unsplash-hosted photographs when they load, and the bundled original editorial illustrations otherwise. This site is not affiliated with CGTN.
-
-## Branding
-
-The original Redline China logo supplied for the project is in `assets/redline-original.webp`. The website uses a header emblem and an SEO preview image derived from it. The theme's red/black color palette lives in `styles.css` (`--red`, `--ink`). The social profile points to https://x.com/RedlineChina.
+品牌标志与图片位于 `assets/`。网站在有网络的情况下优先尝试使用 Unsplash 图像，加载失败后自动切换到内置本地图片。
