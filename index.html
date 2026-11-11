@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#b90813" />
+  <meta name="description" content="Redline China 红线新闻: an independent news-style website covering China, world affairs, business, culture and technology." />
+  <meta property="og:title" content="Redline China | 红线新闻" />
+  <meta property="og:description" content="China and the world, from a wider perspective." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/redline-full.webp" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Redline China | 红线新闻</title>
+</head>
+<body>
+  <div class="utility-bar">
+    <div class="container utility-inner">
+      <div class="utility-left"><span class="red-dot"></span><span class="date-label" id="topDate">WEDNESDAY, NOVEMBER 11, 2026</span><span class="utility-divider"></span><span>CHINA &amp; THE WORLD</span></div>
+      <div class="utility-right"><span class="utility-chinese">红线新闻 · 中国视角，全球新闻</span><a href="https://x.com/RedlineChina" target="_blank" rel="noopener noreferrer" aria-label="Redline China on X" class="x-icon">𝕏</a><button type="button" id="languageButton" class="lang-button" aria-label="Language">EN <span class="tiny-arrow">⌄</span></button></div>
+    </div>
+  </div>
+  <div class="masthead-wrap">
+    <div class="container masthead">
+      <a href="./" data-route="home" class="brand" aria-label="Redline China home">
+        <img src="assets/redline-emblem.webp" alt="Redline China emblem" class="brand-symbol" />
+        <span class="brand-words"><span class="brand-title"><strong>REDLINE</strong><b>CHINA</b></span><span class="brand-subtitle">红线新闻 <i></i> GLOBAL NEWS NETWORK</span></span>
+      </a>
+      <div class="masthead-right"><span class="edition">THE GLOBAL EDITION<span>News, analysis & perspectives</span></span><button class="icon-button search-open" type="button" aria-label="Open search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></button><button class="menu-button" id="menuButton" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button></div>
+    </div>
+  </div>
+  <nav class="primary-nav" aria-label="Main navigation">
+    <div class="container nav-inner" id="navLinks">
+      <a href="./" data-route="home" data-section="home" class="nav-link active">Home</a>
+      <a href="?section=China" data-route data-section="China" class="nav-link">China</a>
+      <a href="?section=World" data-route data-section="World" class="nav-link">World</a>
+      <a href="?section=Politics" data-route data-section="Politics" class="nav-link">Politics</a>
+      <a href="?section=Business" data-route data-section="Business" class="nav-link">Business</a>
+      <a href="?section=Technology" data-route data-section="Technology" class="nav-link">Sci-Tech</a>
+      <a href="?section=Culture" data-route data-section="Culture" class="nav-link">Culture</a>
+      <a href="?section=Travel" data-route data-section="Travel" class="nav-link">Travel</a>
+      <a href="?section=Nature" data-route data-section="Nature" class="nav-link">Nature</a>
+      <a href="?section=Video" data-route data-section="Video" class="nav-link">Video</a>
+      <a href="?section=Opinion" data-route data-section="Opinion" class="nav-link">Opinion</a>
+      <a href="?page=about" data-route class="nav-link nav-about">About</a>
+    </div>
+  </nav>
+  <main id="app" tabindex="-1"><div class="container loading-home">Loading Redline China...</div></main>
+  <footer class="site-footer">
+    <div class="container footer-main">
+      <div class="footer-brand"><a data-route href="./" class="footer-wordmark"><span>REDLINE</span> CHINA</a><div class="footer-chinese">红线新闻</div><p>A closer look at China and the stories shaping our world.</p><div class="footer-social"><a href="https://x.com/RedlineChina" target="_blank" rel="noopener noreferrer">Follow on X ↗</a></div></div>
+      <div class="footer-menu"><h5>EXPLORE</h5><a data-route href="?section=China">China</a><a data-route href="?section=World">World</a><a data-route href="?section=Politics">Politics</a><a data-route href="?section=Business">Business</a></div>
+      <div class="footer-menu"><h5>MORE STORIES</h5><a data-route href="?section=Technology">Sci-Tech</a><a data-route href="?section=Culture">Culture</a><a data-route href="?section=Travel">Travel</a><a data-route href="?section=Video">Video</a></div>
+      <div class="footer-menu"><h5>REDLINE CHINA</h5><a data-route href="?page=about">About us</a><a href="https://x.com/RedlineChina" target="_blank" rel="noopener noreferrer">Contact / X</a><a data-route href="?page=privacy">Privacy</a><a data-route href="?page=terms">Terms of use</a></div>
+    </div>
+    <div class="container footer-bottom"><span>© <span id="footerYear">2026</span> Redline China · 红线新闻. All rights reserved.</span><span>Independent editorial concept. Not affiliated with CGTN.</span></div>
+  </footer>
+  <div class="search-overlay" id="searchOverlay" hidden role="dialog" aria-modal="true" aria-label="Search articles">
+    <div class="search-backdrop" data-close-search></div><div class="search-panel"><div class="search-header"><span>SEARCH REDLINE CHINA</span><button type="button" class="search-close" data-close-search aria-label="Close search">×</button></div><form id="searchForm"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.2"/><path d="m15 15 6 6"/></svg><input id="searchInput" type="search" placeholder="Search stories, places and topics" required autocomplete="off"/><button type="submit">SEARCH</button></form><p>Popular topics: <button class="quick-search" data-query="China">China</button><button class="quick-search" data-query="technology">Technology</button><button class="quick-search" data-query="travel">Travel</button></p></div>
+  </div>
+  <div class="toast" id="toast" aria-live="polite"></div>
+  <script src="app.js" defer></script>
+</body>
+</html>
