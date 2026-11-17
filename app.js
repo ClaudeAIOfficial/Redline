@@ -295,7 +295,7 @@ const LATEST_STORY = {
 };
 ARTICLES.push(LATEST_STORY);
 const JINPING_STORY = {
-  "id": "jinping-coin-search",
+  "id": "“Jinping Coin”事件持续发酵：据消息人士透露，中国警方已在全国范围内追查神秘加密货币发行者",
   "category": "China",
   "type": "社会观察",
   "title": "“Jinping Coin”事件持续发酵：据消息人士透露，中国警方已在全国范围内追查神秘加密货币发行者",
@@ -382,8 +382,8 @@ function staticPage(name){const pages={
  privacy:{title:'隐私政策',text:`<p>本网站目前不提供用户注册服务，也不通过站内搜索收集或保存个人查询内容。搜索功能直接在您的浏览器内运行。</p><p>网站使用外部图片和字体服务。加载这些资源时，相关提供方可能按照其隐私政策处理网络请求信息。</p><p>如日后增加数据分析、广告、订阅或其他第三方服务，我们将相应更新本政策。</p>`},
  terms:{title:'使用条款',text:`<p>欢迎访问红线新闻。您可以通过本站浏览文章、搜索内容以及分享文章链接。</p><p>除另有说明外，本站的品牌元素及页面设计均受适用法律保护。引用、转载或商业使用本站内容前，请确认相应授权。</p><p>外部链接由第三方网站管理。点击此类链接后，相关网站的规则与隐私政策可能适用。</p><p>如需联系网站管理方，请通过我们的官方 X 账号发送消息。</p>`}
  };const obj=pages[name]||{title:'页面不存在',text:'<p>您访问的页面暂时无法打开。</p>'};return `<div class="container static-page"><div class="breadcrumb"><a href="./" data-route>首页</a><span>/</span>${obj.title}</div><span class="eyebrow">红线新闻</span><h1>${obj.title}</h1>${obj.text}</div>`}
-function render(){const qs=new URLSearchParams(window.location.search);const rawArticle=qs.get('article'),article=rawArticle==="xin-poo-online-controversy"?"“Xin Poo”图片引发争议：网传发布者遭拘留，事件真实性仍待核实":rawArticle,section=qs.get('section'),search=qs.get('search'),page=qs.get('page');
- if(rawArticle==="xin-poo-online-controversy"){const canonical=new URL(location.href);canonical.searchParams.set('article',article);history.replaceState({},'',canonical.pathname+canonical.search+canonical.hash)}
+function render(){const qs=new URLSearchParams(window.location.search);const rawArticle=qs.get('article'),article=rawArticle==="xin-poo-online-controversy"?"“Xin Poo”图片引发争议：网传发布者遭拘留，事件真实性仍待核实":rawArticle==="jinping-coin-search"?JINPING_STORY.id:rawArticle,section=qs.get('section'),search=qs.get('search'),page=qs.get('page');
+ if(rawArticle==="xin-poo-online-controversy"||rawArticle==="jinping-coin-search"){const canonical=new URL(location.href);canonical.searchParams.set('article',article);history.replaceState({},'',canonical.pathname+canonical.search+canonical.hash)}
  let title='红线新闻｜中国视角，全球新闻';
  if(article){app.innerHTML=articlePage(article);title=(ARTICLES.find(x=>x.id===article)?.title||'文章')+'｜红线新闻'}
  else if(search!==null){app.innerHTML=sectionPage('All',search);title='搜索｜红线新闻'}
