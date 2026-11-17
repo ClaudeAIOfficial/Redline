@@ -16,3 +16,9 @@ body, button, input{font-family:'Noto Sans SC','DM Sans',Arial,sans-serif}
 .article-hero-screenshot figcaption{font-size:13px;color:#777;line-height:1.65;padding:12px 0 0;text-align:center}
 .article-body ul{padding-left:1.5em;margin:1.1em 0 1.7em}
 .article-body li{margin:.55em 0;line-height:1.85}
+
+/* Jinping Coin editorial image within the report */
+.jinping-inline-image{max-width:620px;margin:36px auto 42px;text-align:center}
+.jinping-inline-image img{display:block;width:100%;height:auto;object-fit:contain;background:#fff;border:1px solid #ececec}
+.jinping-inline-image figcaption{font-size:13px;line-height:1.7;color:#777;margin-top:12px}
+@media(max-width:600px){.jinping-inline-image{margin:26px auto 32px}}
