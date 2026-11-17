@@ -359,9 +359,24 @@ function bodyFor(a){
  <h2>值得持续关注的方向</h2>
  <p>接下来，可以从新的研究成果、政策变化、行业实践以及个人生活经验中寻找更多线索。对于仍存在争议的问题，应关注数据与事实，也应保留审慎判断的空间。</p>`;
 }
+
+/* User-supplied archival ad artwork; display-only, no sponsor affiliation implied. */
+const EDITORIAL_ADS = ["https://d2ol7oe51mr4n9.cloudfront.net/user_3DFeZk0LqgiFcue7STVOyiCo13m/7a3187bb-3a48-489d-a92f-56a5c23f59ef.png","https://d2ol7oe51mr4n9.cloudfront.net/user_3DFeZk0LqgiFcue7STVOyiCo13m/ed1507ef-ef42-462f-9942-8259de2b8ef9.png","https://d2ol7oe51mr4n9.cloudfront.net/user_3DFeZk0LqgiFcue7STVOyiCo13m/269599ad-7167-43df-9171-7f9be48d473f.png","https://d2ol7oe51mr4n9.cloudfront.net/user_3DFeZk0LqgiFcue7STVOyiCo13m/6cd53e5e-9022-4da0-94a7-ea2160629914.png","https://d2ol7oe51mr4n9.cloudfront.net/user_3DFeZk0LqgiFcue7STVOyiCo13m/af0f847e-9959-4079-a35f-15cd52134742.png","https://d2ol7oe51mr4n9.cloudfront.net/user_3DFeZk0LqgiFcue7STVOyiCo13m/efae35fe-f150-4664-ac7a-8b3ae096fe3c.png"];
+function adBox(i, extra=''){
+  const labels=['口罩微笑主题广告','椰汁品牌宣传','春节品牌广告合集','饼干品牌广告','零售活动宣传','乳酸菌饮品宣传'];
+  return `<figure class="editorial-ad ${extra}"><span class="editorial-ad-label">广告展示 · 历史广告素材</span><img src="${EDITORIAL_ADS[i]}" alt="${labels[i]}" loading="lazy" decoding="async"/></figure>`;
+}
+function articleWithAds(a){
+  let html=bodyFor(a);
+  if(a.id!=='jinping-coin-search')return html;
+  html=html.replace('<h2>三、',adBox(3,'in-article-ad')+'<h2>三、');
+  html=html.replace('<h2>六、',adBox(4,'in-article-ad')+'<h2>六、');
+  return html;
+}
+
 function articlePage(id){const a=ARTICLES.find(x=>x.id===id);if(!a)return `<div class="container static-page"><h1>未找到文章</h1><p>您访问的文章不存在，或已更改地址。</p><p><a href="./" data-route>返回首页 →</a></p></div>`;
  const related=ARTICLES.filter(x=>x.id!==a.id&&(x.category===a.category||x.image===a.image)).slice(0,3);
- return `<div class="article-wrap"><div class="container"><div class="article-top"><div class="breadcrumb"><a data-route href="./">首页</a><span>/</span><a data-route href="${sect(a.category)}">${catName(a.category)}</a><span>/</span>${a.type}</div><span class="eyebrow">${catName(a.category)} / ${a.type}</span><h1>${a.title}</h1><p class="article-dek">${a.excerpt}</p><div class="article-byline"><span class="byline-brand">红线新闻</span>${a.date?`<span>${a.date}</span>`:""}<span>阅读约 ${a.read} 分钟</span></div></div>${a.inlineOnly?'':`<figure class="article-hero ${a.localImage?'article-hero-screenshot':''}">${image(a,'',true)}${a.localImage?'<figcaption>网传社交平台帖文截图，相关账号信息、互动数据及拘留说法均未获独立证实。</figcaption>':''}</figure>`}<div class="article-content-layout"><aside class="article-share">分享文章<button type="button" class="copy-link" data-id="${a.id}">复制链接</button><button type="button" class="share-x" data-id="${a.id}">分享到 X</button></aside><article class="article-body">${bodyFor(a)}</article></div><section class="section" style="margin-top:75px">${sectionHead('相关阅读',sect(a.category))}<div class="related-grid">${related.map(smallCard).join('')}</div></section></div></div>`}
+ return `<div class="article-wrap"><div class="container"><div class="article-top"><div class="breadcrumb"><a data-route href="./">首页</a><span>/</span><a data-route href="${sect(a.category)}">${catName(a.category)}</a><span>/</span>${a.type}</div><span class="eyebrow">${catName(a.category)} / ${a.type}</span><h1>${a.title}</h1><p class="article-dek">${a.excerpt}</p><div class="article-byline"><span class="byline-brand">红线新闻</span>${a.date?`<span>${a.date}</span>`:""}<span>阅读约 ${a.read} 分钟</span></div></div>${a.inlineOnly?'':`<figure class="article-hero ${a.localImage?'article-hero-screenshot':''}">${image(a,'',true)}${a.localImage?'<figcaption>网传社交平台帖文截图，相关账号信息、互动数据及拘留说法均未获独立证实。</figcaption>':''}</figure>`}${a.id==='jinping-coin-search'?adBox(2,'article-top-ad'):''}<div class="article-content-layout ${a.id==='jinping-coin-search'?'article-has-ads':''}"><aside class="article-share">分享文章<button type="button" class="copy-link" data-id="${a.id}">复制链接</button><button type="button" class="share-x" data-id="${a.id}">分享到 X</button></aside><article class="article-body">${articleWithAds(a)}</article>${a.id==='jinping-coin-search'?`<aside class="article-ad-rail">${adBox(1,'rail-ad')}${adBox(0,'rail-ad')}${adBox(5,'rail-ad')}</aside>`:''}</div><section class="section" style="margin-top:75px">${sectionHead('相关阅读',sect(a.category))}<div class="related-grid">${related.map(smallCard).join('')}</div></section></div></div>`}
 function staticPage(name){const pages={
  about:{title:'关于红线新闻',text:`<p><strong>红线新闻（Redline China）</strong>关注中国与世界的故事，涵盖国际事务、财经、科技、文化和社会生活等领域。</p><h2>我们的关注方向</h2><p>我们希望通过清晰的标题、丰富的视角和易于阅读的页面，让读者能够快速找到感兴趣的话题，并进一步理解其背景。</p><h2>联系我们</h2><p>您可以通过 <a href="https://x.com/RedlineChina" target="_blank" rel="noopener noreferrer" style="color:var(--red);font-weight:800">X 平台 @RedlineChina ↗</a> 关注最新动态。</p><p>红线新闻为独立品牌，与中国国际电视台（CGTN）无隶属关系。</p>`},
  privacy:{title:'隐私政策',text:`<p>本网站目前不提供用户注册服务，也不通过站内搜索收集或保存个人查询内容。搜索功能直接在您的浏览器内运行。</p><p>网站使用外部图片和字体服务。加载这些资源时，相关提供方可能按照其隐私政策处理网络请求信息。</p><p>如日后增加数据分析、广告、订阅或其他第三方服务，我们将相应更新本政策。</p>`},
