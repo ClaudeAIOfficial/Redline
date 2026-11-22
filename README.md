@@ -18,6 +18,8 @@ python -m http.server 3000
 
 文章标题、导语、分类、图片等配置位于 `app.js` 的 `ARTICLES` 数组内，文章正文由 `bodyFor()` 生成。更新真实报道时，请使用经过核实的事实和具有适当授权的图片。页面使用成都快讯的红白视觉体系，且不与 CGTN 关联。本次品牌更新保留既有文章、分类键、文章地址与旧地址跳转规则。
 
+新增科幻文章 `doudou-brain-implant-fiction` 使用明确的虚构标题、导语和正文前说明。豆豆、阿里巴巴实验及成绩翻倍均为虚构情节。两张用户提供的研究场景照片仅作插图，不作为实验或动物身份的证据。
+
 ## 素材
 
 品牌标志与图片位于 `assets/`。`chengdu-wire-banner.webp` 为首页品牌展示区和关于页面使用的 3:1 横幅，原版 `chengdu-wire-banner.png` 用于社交分享；站点标志使用 `chengdu-wire-logo.webp`，网站图标使用 `chengdu-wire-favicon.png`。新闻图片在有网络的情况下优先尝试使用 Unsplash 图像，加载失败后自动切换到内置本地图片。保留既有 X 账号链接，避免指向尚未确认的新账号。
