@@ -352,7 +352,10 @@ const photoUrl=(id)=>`https://images.unsplash.com/${id}?auto=format&fit=crop&w=1
 const catName=(cat)=>CATEGORY_NAMES[cat]||cat;
 function image(article,cls='',eager=false){return `<img class="${cls}" src="${article.localImage||photoUrl(article.photo)}" alt="${escapeHtml(article.imageAlt||article.title+'相关图片')}" ${article.imagePosition?`style="object-position:${escapeHtml(article.imagePosition)}"`:''} ${eager?'fetchpriority="high"':'loading="lazy"'} decoding="async" onerror="this.onerror=null;this.src='assets/${article.image}.webp'"/>`}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]))}
-function link(article){return `?article=${q(article.id)}`}
+function link(article){return article.id===DOUDOU_STORY.id?`/${q(article.id)}`:`/?article=${q(article.id)}`}
+function articleFromPath(pathname){
+ try{return decodeURIComponent(pathname)===`/${DOUDOU_STORY.id}`?DOUDOU_STORY.id:null}catch{return null}
+}
 function sect(cat){return `?section=${q(cat)}`}
 function dateLong(){return new Intl.DateTimeFormat('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'}).format(new Date())}
 function sectionHead(title,href){return `<div class="section-head"><h2 class="section-title">${title}</h2><a class="section-more" href="${href}" data-route>查看更多 <span>→</span></a></div>`}
@@ -397,8 +400,9 @@ function staticPage(name){const pages={
  privacy:{title:'隐私政策',text:`<p>本网站目前不提供用户注册服务，也不通过站内搜索收集或保存个人查询内容。搜索功能直接在您的浏览器内运行。</p><p>网站使用外部图片和字体服务。加载这些资源时，相关提供方可能按照其隐私政策处理网络请求信息。</p><p>如日后增加数据分析、广告、订阅或其他第三方服务，我们将相应更新本政策。</p>`},
  terms:{title:'使用条款',text:`<p>欢迎访问成都快讯。您可以通过本站浏览文章、搜索内容以及分享文章链接。</p><p>除另有说明外，本站的品牌元素及页面设计均受适用法律保护。引用、转载或商业使用本站内容前，请确认相应授权。</p><p>外部链接由第三方网站管理。点击此类链接后，相关网站的规则与隐私政策可能适用。</p><p>如需联系网站管理方，请通过我们的官方 X 账号发送消息。</p>`}
  };const obj=pages[name]||{title:'页面不存在',text:'<p>您访问的页面暂时无法打开。</p>'};return `<div class="container static-page"><div class="breadcrumb"><a href="./" data-route>首页</a><span>/</span>${obj.title}</div><span class="eyebrow">成都快讯</span><h1>${obj.title}</h1>${obj.text}</div>`}
-function render(){const qs=new URLSearchParams(window.location.search);const rawArticle=qs.get('article'),article=rawArticle==="xin-poo-online-controversy"?LATEST_STORY.id:rawArticle==="doudou-brain-implant-fiction"?DOUDOU_STORY.id:rawArticle,section=qs.get('section'),search=qs.get('search'),page=qs.get('page');
- if(rawArticle&&rawArticle!==article){const canonical=new URL(location.href);canonical.searchParams.set('article',article);history.replaceState({},'',canonical.pathname+canonical.search+canonical.hash)}
+function render(){const qs=new URLSearchParams(window.location.search);const section=qs.get('section'),search=qs.get('search'),page=qs.get('page'),rawArticle=qs.get('article')||(!section&&search===null&&!page?articleFromPath(window.location.pathname):null),article=rawArticle==="xin-poo-online-controversy"?LATEST_STORY.id:rawArticle==="doudou-brain-implant-fiction"?DOUDOU_STORY.id:rawArticle;
+ if(article===DOUDOU_STORY.id){const canonical=new URL(link(DOUDOU_STORY),document.baseURI);canonical.hash=window.location.hash;const path=canonical.pathname+canonical.search+canonical.hash;if(path!==window.location.pathname+window.location.search+window.location.hash)history.replaceState({},'',path)}
+ else if(rawArticle&&rawArticle!==article){const canonical=new URL(location.href);canonical.pathname='/';canonical.searchParams.set('article',article);history.replaceState({},'',canonical.pathname+canonical.search+canonical.hash)}
  let title='成都快讯｜立足成都，连接世界';
  if(article){app.innerHTML=articlePage(article);title=(ARTICLES.find(x=>x.id===article)?.title||'文章')+'｜成都快讯'}
  else if(search!==null){app.innerHTML=sectionPage('All',search);title='搜索｜成都快讯'}
@@ -409,7 +413,7 @@ function render(){const qs=new URLSearchParams(window.location.search);const raw
  const active=(section||'home').toLowerCase();document.querySelectorAll('.nav-link').forEach(a=>{a.classList.toggle('active',a.dataset.section?.toLowerCase()===active||(!section&&!article&&!page&&!search&&a.dataset.section==='home'))});
  document.getElementById('app').focus({preventScroll:true});
 }
-function goto(url){const next=new URL(url,window.location.href);try{history.pushState({},'',next.pathname+next.search+next.hash)}catch(e){window.location.href=next.href;return}closeSearch();document.querySelector('.primary-nav').classList.remove('nav-open');document.getElementById('menuButton').setAttribute('aria-expanded','false');render();window.scrollTo({top:0,behavior:'instant'})}
+function goto(url){const next=new URL(url,document.baseURI);try{history.pushState({},'',next.pathname+next.search+next.hash)}catch(e){window.location.href=next.href;return}closeSearch();document.querySelector('.primary-nav').classList.remove('nav-open');document.getElementById('menuButton').setAttribute('aria-expanded','false');render();window.scrollTo({top:0,behavior:'instant'})}
 function openSearch(){document.getElementById('searchOverlay').hidden=false;document.body.style.overflow='hidden';setTimeout(()=>document.getElementById('searchInput').focus(),30)}
 function closeSearch(){document.getElementById('searchOverlay').hidden=true;document.body.style.overflow=''}
 let toastTimeout;
@@ -419,8 +423,8 @@ document.addEventListener('click',e=>{
  if(e.target.closest('.search-open')){openSearch();return}
  if(e.target.closest('[data-close-search]')){closeSearch();return}
  const fast=e.target.closest('[data-query]');if(fast){goto(`?search=${q(fast.dataset.query)}`);return}
- const copy=e.target.closest('.copy-link');if(copy){const url=new URL(`?article=${q(copy.dataset.id)}`,location.href).href;if(navigator.clipboard?.writeText){navigator.clipboard.writeText(url).then(()=>toast('链接已复制')).catch(()=>toast('请复制链接：'+url))}else{const inp=document.createElement('input');inp.value=url;document.body.append(inp);inp.select();document.execCommand('copy');inp.remove();toast('链接已复制')}return}
- const share=e.target.closest('.share-x');if(share){const a=ARTICLES.find(x=>x.id===share.dataset.id),url=new URL(`?article=${q(a.id)}`,location.href).href;window.open(`https://twitter.com/intent/tweet?text=${q(a.title)}&url=${q(url)}`,'_blank','noopener,noreferrer');return}
+ const copy=e.target.closest('.copy-link');if(copy){const a=ARTICLES.find(x=>x.id===copy.dataset.id);if(!a)return;const url=new URL(link(a),document.baseURI).href;if(navigator.clipboard?.writeText){navigator.clipboard.writeText(url).then(()=>toast('链接已复制')).catch(()=>toast('请复制链接：'+url))}else{const inp=document.createElement('input');inp.value=url;document.body.append(inp);inp.select();document.execCommand('copy');inp.remove();toast('链接已复制')}return}
+ const share=e.target.closest('.share-x');if(share){const a=ARTICLES.find(x=>x.id===share.dataset.id);if(!a)return;const url=new URL(link(a),document.baseURI).href;window.open(`https://twitter.com/intent/tweet?text=${q(a.title)}&url=${q(url)}`,'_blank','noopener,noreferrer');return}
 });
 document.getElementById('menuButton').addEventListener('click',()=>{const nav=document.querySelector('.primary-nav');const open=nav.classList.toggle('nav-open');document.getElementById('menuButton').setAttribute('aria-expanded',String(open))});
 document.getElementById('languageButton').addEventListener('click',()=>toast('当前使用简体中文'));
