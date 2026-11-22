@@ -176,3 +176,27 @@ button:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
   .brand-subtitle { font-size: 10px; }
   .icon-button, .menu-button { width: 35px; height: 35px; }
 }
+
+/* 全宽布局：让新闻版面随屏幕展开，仅保留必要的两侧留白。 */
+:root { --max: none; --page-gutter: clamp(16px, 2vw, 40px); }
+.container { width: calc(100% - var(--page-gutter) * 2); max-width: none; }
+#app:focus { outline: none; }
+.article-top, .article-caption, .article-content-layout { max-width: none; }
+.article-hero:not(.article-hero-screenshot) { max-width: none; }
+.article-content-layout { grid-template-columns: 120px minmax(0, 1fr); }
+.article-body { min-width: 0; }
+.article-body > p, .article-body > h2, .article-body > ul,
+.article-body > ol, .static-page > p { max-width: 85ch; }
+@media (min-width: 1101px) {
+  .hero-grid { grid-template-rows: repeat(2, clamp(265px, 18vw, 390px)); }
+  .hero-main h2 { font-size: clamp(43px, 2.4vw, 64px); max-width: 20em; }
+  .hero-main .cover-excerpt { max-width: 48em; }
+  .editors-feature .thumb { height: clamp(260px, 19vw, 420px); }
+  .small-grid .thumb { height: clamp(155px, 12vw, 270px); }
+  .category-layout .feature-card .thumb { height: clamp(260px, 18vw, 400px); }
+  .category-layout .news-card .thumb { height: clamp(171px, 12vw, 270px); }
+  .index-card .thumb { height: clamp(227px, 16vw, 360px); }
+}
+@media (max-width: 850px) {
+  .article-content-layout { grid-template-columns: 1fr; }
+}
