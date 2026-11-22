@@ -203,23 +203,25 @@ button:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
 
 /* 科幻专题配图与清晰的内容标识。 */
 .article-top h1 { text-wrap: balance; }
-.fiction-note {
-  margin: 0 0 28px;
-  padding: 18px 22px;
-  border-left: 3px solid var(--red);
-  background: #fff5f4;
-  color: #493636;
-  font-size: 14px;
+.fiction-disclaimer {
+  margin: 36px 0 0;
+  padding: 0;
+  color: #777;
+  font-size: 13px;
   line-height: 1.8;
 }
-.fiction-note strong { display: block; color: var(--red); font-size: 13px; margin-bottom: 3px; }
-.fiction-note p { margin: 0; max-width: 90ch; }
+.article-body-columns { display: grid; grid-template-columns: minmax(0, 1fr); gap: 34px; }
+.article-chapter { min-width: 0; }
+.article-body .article-chapter h2 { margin-top: 0; }
+.article-body .article-chapter p:last-child { margin-bottom: 0; }
+@media (min-width: 1101px) {
+  .article-body-columns { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(36px, 4vw, 90px); }
+}
 .article-photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .article-photo { margin: 0; min-width: 0; }
 .article-photo img { display: block; width: 100%; height: clamp(360px, 44vw, 760px); object-fit: contain; background: #f3f1ec; }
 .article-photo figcaption { padding: 12px 0 0; font-size: 12px; line-height: 1.8; color: #777; }
 @media (max-width: 600px) {
-  .fiction-note { padding: 15px 17px; margin-bottom: 20px; }
   .article-photo-grid { grid-template-columns: 1fr; gap: 24px; }
   .article-photo img { height: auto; }
 }
